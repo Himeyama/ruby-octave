@@ -27,18 +27,27 @@ def butter(n, wc, *varargin)
     gain = c ** n
 
     # 平面周波数変換
+    # p zero, pole,gain,wc,stop
+    # return
     zero, pole, gain = sftrans(zero, pole, gain, wc, stop)
+
+    # p zero, pole, gain
 
     # puts "zero = #{zero}"
     # p zero
 
+    # p pole
+
     if digital
+        # puts "zero=#{zero}, pole=#{pole}, gain=#{gain}, t=#{t}"
         zero, pole, gain = bilinear(zero, pole, gain, t)
     end
 
+    # p zero, pole, gain
 
 
-    [a, b, c, d]
+
+    # [a, b, c, d]
 end
 
-p butter(3.0, [0.2, 0.6], "high")
+butter(3.0, [0.2, 0.6], "high")

@@ -1,3 +1,11 @@
+class Vector
+    def prod
+        pi = 1
+        self.each{|e| pi *= e}
+        pi
+    end
+end
+
 def bilinear(sz, sp, sg, *t)
     if t.empty?
         t = sg
@@ -14,8 +22,28 @@ def bilinear(sz, sp, sg, *t)
         exit false
     end
 
-    p sz.map{|e| (2 - e * t) / t}
-    # p (2 - sz * t)
-    # zg = sg * 
+## ----------------  -------------------------  ------------------------
+## Bilinear          zero: (2+xT)/(2-xT)        pole: (2+xT)/(2-xT)
+##      2 z-1        pole: -1                   zero: -1
+## S -> - ---        gain: (2-xT)/T             gain: (2-xT)/T
+##      T z+1
+## ----------------  -------------------------  ------------------------
 
+    # p sg, sz, sp
+    # p ((sz.map{|e| 2-e*t}) / t).prod
+    zg = (sg * (sz.map{|e| 2-e*t} / t).prod / (sp.map{|e| 2-e*t} / t).prod).real
+    zp = sp.map{|e| (2 + e * t) / (2 - e * t)}
+    if sz.size == 0
+        zz = Matrix.columns(Array.new(zp.size){Array.new(zp.size){-1}})
+    else
+        zz = sz.map{|e| (2 + e * t) / (2 - e * t)}
+        # zz = postpad...
+    end
+
+    p zz
+
+    # if nargout==2
+    #     [Zz, Zp] = zp2tf(Zz, Zp, Zg)
+    # end
+    [zz, zp, zg]
 end
