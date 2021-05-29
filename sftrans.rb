@@ -42,7 +42,7 @@ def sftrans(sz, sp, sg, w, stop)
             else
                 sg = sg * (-sz.prod / (-sp.prod)).real
             end
-            # 続き...
+            # 続き... ## ここから！
         else
 ## ----------------  -------------------------  ------------------------
 ## Band Pass         zero: b ± sqrt(b^2-FhFl)   pole: b ± sqrt(b^2-FhFl)
@@ -59,6 +59,7 @@ def sftrans(sz, sp, sg, w, stop)
             else
                 # 未
             end
+            p sg, b, sp
         end
     else
         fc = w

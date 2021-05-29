@@ -1,3 +1,5 @@
+require "./postpad"
+
 class Vector
     def prod
         pi = 1
@@ -7,6 +9,7 @@ class Vector
 end
 
 def bilinear(sz, sp, sg, *t)
+    # p sz, sp, sg, t
     if t.empty?
         t = sg
         sz, sp, sg = tf2zp(sz, sp) #未実装
@@ -31,16 +34,16 @@ def bilinear(sz, sp, sg, *t)
 
     # p sg, sz, sp
     # p ((sz.map{|e| 2-e*t}) / t).prod
-    zg = (sg * (sz.map{|e| 2-e*t} / t).prod / (sp.map{|e| 2-e*t} / t).prod).real
+    zg = (sg * prod((-sz*t).plus(2)/t) / prod((-sp*t).plus(2)/t)).real
     zp = sp.map{|e| (2 + e * t) / (2 - e * t)}
     if sz.size == 0
         zz = Matrix.columns(Array.new(zp.size){Array.new(zp.size){-1}})
     else
         zz = sz.map{|e| (2 + e * t) / (2 - e * t)}
-        # zz = postpad...
+        zz = postpad(zz, p, -1)
     end
 
-    p zz
+    # p zz
 
     # if nargout==2
     #     [Zz, Zp] = zp2tf(Zz, Zp, Zg)

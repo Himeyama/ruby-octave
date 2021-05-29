@@ -39,5 +39,3 @@ def postpad(x, l, c=0, dim=nil)
     end
     y
 end
-
-p postpad([1, 2], 4)
