@@ -59,7 +59,7 @@ def sftrans(sz, sp, sg, w, stop)
             else
                 # 未
             end
-            p sg, b, sp
+            # p sg, b, sp
         end
     else
         fc = w
